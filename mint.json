@@ -30,24 +30,6 @@
     "name": "Dashboard",
     "url": "https://dashboard.shapeblock.com"
   },
-  "tabs": [
-    {
-      "name": "Quickstart",
-      "url": "quickstart"
-    },
-    {
-      "name": "Clusters",
-      "url": "clusters"
-    },
-    {
-      "name": "Day 2 stuff",
-      "url": "day-2"
-    },
-    {
-      "name": "Roadmap",
-      "url": "roadmap"
-    }
-  ],
   "navigation": [
     {
       "group": "Get Started",
@@ -83,6 +65,7 @@
         "apps/deploy-app",
         "apps/configure-app",
         "apps/attach-services",
+        "apps/private-repos",
         "apps/delete-app"
       ]
     },
