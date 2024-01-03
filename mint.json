@@ -1,29 +1,34 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Starter Kit",
+  "name": "ShapeBlock",
   "logo": {
     "dark": "/logo/dark.svg",
-    "light": "/logo/light.svg"
+    "light": "/logo/shapeblock.png",
+    "href": "https://www.shapeblock.com"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/favicon.png",
   "colors": {
-    "primary": "#0D9373",
+    "primary": "#342149",
     "light": "#07C983",
-    "dark": "#0D9373",
+    "dark": "#342149",
     "anchors": {
-      "from": "#0D9373",
+      "from": "#342149",
       "to": "#07C983"
     }
+  },
+  "modeToggle": {
+    "default": "light",
+    "isHidden": true
   },
   "topbarLinks": [
     {
       "name": "Support",
-      "url": "mailto:hi@mintlify.com"
+      "url": "mailto:lakshmi@shapeblock.com"
     }
   ],
   "topbarCtaButton": {
     "name": "Dashboard",
-    "url": "https://dashboard.mintlify.com"
+    "url": "https://dashboard.shapeblock.com"
   },
   "tabs": [
     {
@@ -71,8 +76,9 @@
     }
   ],
   "footerSocials": {
-    "twitter": "https://twitter.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://www.linkedin.com/company/mintsearch"
+    "twitter": "https://twitter.com/lakshminp",
+    "github": "https://github.com/shapeblock",
+    "website": "https://shapeblock.com",
+    "linkedin": "https://www.linkedin.com/in/lakshminp"
   }
 }
