@@ -1,0 +1,33 @@
+
+To add a DigitalOcean API key, click on the providers link in the top menu.
+
+![Menu with providers]()
+
+Click on "Add new Cloud Provider keys". It will open a dropdown with different cloud providers.
+Select "Digitalocean" from the options.
+
+![Add new cloud provider]()
+
+Alternatively, you can directly [visit](http://localhost:8000/providers/new/digitalocean/) the page.
+
+The form will present you with an option to add an API key.
+
+![DigitalOcean form]()
+
+Give it a human-readable name which will help you refer it later.
+
+#### Instructions for API key
+
+The below instructions assume that you already have a DigitalOcean account created and you’re logged into it.
+You can get a DigitalOcean API key for your account from [here](https://cloud.digitalocean.com/account/api/tokens/new).
+Make sure that the “write” scope for the API key is checked.
+
+![DigitalOcean new token](images/digitalocean-read-write-token.png)
+
+Copy over the key and paste it in the form above and click on "save".
+
+You should have your provider listed on the [providers](http://localhost:8000/providers/) page after adding the keys successfully.
+
+### Possible next steps
+
+<Card title="Create a new cluster" icon="server" iconType="duotone" href="/clusters/create-cluster"/>

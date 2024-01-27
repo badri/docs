@@ -1,0 +1,36 @@
+
+A cluster is a set of one or more VMs required for deploying and scaling your apps.
+These VMs are created using your cloud provider keys in your cloud and cloud region of choice.
+
+You need a minimum of 1 cluster with 4GiB of memory and 80GiB of disk space to run your applications.
+
+You can create a new cluster by visiting the [clusters]() link in the menu,
+
+![Menu with clusters]()
+
+and clicking on [Create a new cluster]().
+
+![Add new cluster]()
+
+1. Give your cluster a human readable name.
+2. Select which cloud provider you want to use to spin up the cluster. **NOTE** that this will list cloud providers added by you.
+3. Select which region to deploy the cluster to. This will depend on the cloud provider you chose in the previoius field.
+4. Add a VM with a human readable name and your desired size. The VM size depends on the cloud provider you chose.
+5. [Optional] Add more VMs in a similar fashion on clicking on "Add more VMs".
+6. Click on "Create Cluster".
+
+Cluster creation(including provisioning of VMs and provisioning all the software etc.) takes typically 10-15 minutes.
+
+![Cluster details page with created]()
+
+You will get an email saying that your cluster is ready once the creation part is successful.
+
+A "ready" cluster is ready to deploy applications.
+
+## Why didn't my cluster get created?
+
+![Cluster in ready state]()
+
+### Possible next steps
+
+<Card title="Create a new project" icon="folders" iconType="duotone" href="/projects/create-project"/>

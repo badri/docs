@@ -37,10 +37,11 @@
     },
     {
       "group": "Providers",
-      "pages": ["providers/introduction", "providers/digitalocean"]
+      "pages": ["providers/introduction", "providers/digitalocean", "providers/linode", "providers/aws"]
     },
     {
       "group": "Clusters",
+      "icon": "server",
       "pages": [
         "clusters/introduction",
         "clusters/create-cluster",
