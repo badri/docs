@@ -1,0 +1,99 @@
+Deployment is the stage where ShapeBlock,
+
+1. pulls the latest source code of the repo and the branch you specified from git.
+2. packages your application source code into a container
+3. deploys the container into a cluster according to the configuration you specified.
+
+There are 2 kinds of deployment available.
+
+<Warning>
+Make sure you have configured the app parameters like build time variables, runtime variables and volumes before deploying your app.
+The app deployment is bound to fail otherwise.
+</Warning>
+
+### Manual deploy
+
+Go to the app details page, and simply click the "Deploy" button.
+
+![App details deploy]()
+
+### Auto deploy
+
+You can configure ShapeBlock to trigger a deployment as soon as a `git push` happens in an app branch. This is not recommended for a production app, but can be quite useful for dev and preview environments.
+For autodeploy to work, you have to configure your app to [read from a private repo](private-repos).
+
+Once your app is setup as a private repo, you can click the "Turn on autodeploy" button in the app details page.
+
+![App details autodeploy]()
+
+<Note>
+When an app is setup with autodeploy turned on, you won't be able to deploy manually. You have to turn off autodeploy.
+</Note>
+
+Autodeploy can be turned off by clicking the "Turn off autodeploy" button in the app details page.
+
+![App details autodeploy off]()
+
+<Note>
+When a deployment is in progress, you can't configure the app or trigger another deployment till the deployment is completed.
+</Note>
+
+### Deployment logs
+
+The deployment logs for your current and previous deployments can be viewed on the "Deployments" tab in the app details page.
+
+![Deployment logs]()
+
+This will also show the status of the deployment, i.e. whether the deployment was successful or a failure
+
+
+### Post deployment
+
+When a deployment is successful, you should be able to get the app URL in the app detail page.
+
+![App url]()
+
+The app URL is of the form `https://[project-name]-[app.name].[cluster-name].shapeblockapp.com`.
+
+It ships with TLS enabled, courtesy of [LetsEncrypt](https://letsencrypt.org/).
+
+<Note>
+It is possible to add one or more [custom domains](custom-domains) to your app after deploying it.
+</Note>
+
+
+### When a deployment fails
+
+A deployment could fail due to any number of reasons. It will show up in the "Deployments" tab with the status "failed".
+
+![failed deployment]()
+
+Please check the [troubleshooting section](troubleshooting-failed-deployments) for more information on how to fix this.
+
+### Deployment is successful but app doesn't load
+
+Sometimes, a deployment is successful but the app doesn't come up.
+
+![app loading failed]()
+
+Please check the [troubleshooting section](troubleshooting-failed-deployments) for more information on how to fix this.
+
+### Possible next steps
+
+<Card title="Attach a service" icon="database" iconType="duotone" href="/services/attach-service">
+**Optional** required only if your app wants to talk to a database
+</Card>
+
+<Card title="Check your app logs" icon="list" iconType="duotone" href="logs">
+</Card>
+
+<Card title="Connect with Github" icon="lock" iconType="duotone" href="private-repos">
+For deploying private repositories and setting up autodeploy
+</Card>
+
+<Card title="Add a custom domain for your app" icon="globe" iconType="duotone" href="custom-domains">
+</Card>
+
+<Card title="Scale up your infrastructure" icon="up-right-and-down-left-from-center" iconType="duotone" href="/clusters/add-nodes">
+Add one or more nodes to your cluster
+</Card>

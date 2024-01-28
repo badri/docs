@@ -1,0 +1,50 @@
+You can invite another user to access your cluster and deploy apps in it.
+
+It is not mandatory for this user to have an account in ShapeBlock yet.
+
+<Note>
+None of the users you invite will be billed for anything. Only you will be billed for the VMs you provision via ShapeBlock.
+</Note>
+
+By default, only you will be able to access your cluster and deploy apps in it. Only when you invite new users, they will be able to operate on the cluster.
+
+<Note>
+Invitations are on a per-cluster basis. You need to invite a user to every individual cluster you need them to access.
+</Note>
+
+### How to invite
+
+You can invite a user by going to the "Team" tab in the Cluster details page.
+
+![teams tab]()
+
+You will be presented with an invite form.
+
+![invite form]()
+
+#### email
+
+The email of the user you have to send an invite to. They will get an invite link in that email address.
+
+#### role
+
+The role they will be invited under. There are 2 roles.
+
+##### Maintainer
+
+Users with this role can create/delete projects, create/update/deploy/delete apps, create/delete services, attach/detach apps to services across the cluster.
+
+##### Owner
+
+This role has the same permissions as `maintainer`. Additionally, they can scale up and scale down a cluster and invite other members.
+
+You can check pending invitations by scrolling further bottom. These are invites sent out for the user, but still haven't accepted the invite.
+
+<Note>
+For a user not signed up in ShapeBlock previously, the invite link will redirect to sign up form, and will apply the roles after they sign up successfully.
+</Note>
+
+### Possible next steps
+
+<Card title="Invite users to access your project" icon="folder-plus" iconType="duotone" href="/teams/project-team">
+</Card>

@@ -1,0 +1,32 @@
+You can add multiple nodes to your cluster if you need more compute resources for deploying your apps.
+
+This can be done by going to the "Cluster details" page under the "Create new VMs" section.
+
+![create new VMs]()
+
+You can add one or more VMs in this form and hit "save".
+
+This will trigger a cluster scale operation.
+
+<Note>
+This won't affect the state of any of the existing apps or services which are presently running in the cluster.
+</Note>
+
+Once the cluster scale operation is successful, the newly added VMs will show up like this.
+
+![scaled VMs]()
+
+It typically takes around 10 minutes to scale a cluster and is usually independent of the number of nodes being added.
+
+<Note>
+For each VM you add, you will be billed $10 USD per VM per month prorated.
+</Note>
+
+### Possible next steps
+
+<Card title="Invite users to access your cluster" icon="user-plus" iconType="duotone" href="/teams/cluster-team">
+</Card>
+
+
+<Card title="Invite users to access your project" icon="folder-plus" iconType="duotone" href="/teams/project-team">
+</Card>

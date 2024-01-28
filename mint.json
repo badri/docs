@@ -81,6 +81,13 @@
       ]
     },
     {
+      "group": "Teams",
+      "pages": [
+        "teams/cluster-team",
+        "teams/project-team"
+      ]
+    },
+    {
       "group": "Concepts",
       "pages": [
         "concepts/microk8s",

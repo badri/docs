@@ -1,20 +1,9 @@
-Chances are you might want to talk to a database from your app.
-Although it is recommended to use a managed database and configure it as a [runtime environment variable](configure-app#runtime-variables), it is also possible to spin up such services inside your cluster and atttach them to your app.
-
-ShapeBlock currently supports the following services:
-
-- MySQL
-- Postgres
-- MongoDB
-- Redis
-- Open search
-- RabbitMQ
+You can add a service by going to the "services" link in the top menu,
 
 <Note>
 If you want to use any of the above services in your app, you have to spin up that service in the same project as that of the app.
 </Note>
 
-You can add a service by going to the "services" link in the top menu,
 
 ![Serivces menu]()
 
@@ -53,5 +42,6 @@ There are other services on the roadmap, but not available at this time.
 
 ### Possible next steps
 
-<Card title="Attach your service to an app" icon="database" iconType="duotone" href="/services/attach-service">
+<Card title="Attach your service to an app" icon="plus" iconType="duotone" href="/services/attach-service">
+**Optional** required only if your app wants to access that service
 </Card>
