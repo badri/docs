@@ -60,11 +60,10 @@
     {
       "group": "Applications",
       "pages": [
+        "apps/private-repos",
         "apps/create-app",
         "apps/configure-app",
         "apps/deploy-app",
-        "apps/attach-services",
-        "apps/private-repos",
         "apps/delete-app"
       ]
     },
