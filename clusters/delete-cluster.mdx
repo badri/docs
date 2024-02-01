@@ -1,3 +1,17 @@
+A cluster can be deleted by any user who has the "owner" role in that cluster.
+
+There will be a "Delete cluster" button at the bottom of the cluster detail page.
+
+![Delete cluster button](/images/cluster-delete.png)
+
+Once the button is clicked, you will be redirected to the confirmation page.
+
+![Delete cluster confirmation](/images/cluster-delete-conf.png)
+
+After confirming, you will be redirected to the cluster list page with an acknowledgement message.
+
+![Delete cluster ack](/images/cluster-delete-ack.png)
+
 ShapeBlock deletes all the resources and artefacts it created when you delete a cluster.
 
 You can check this by going to your cloud provider and search by tags:
@@ -6,4 +20,4 @@ You can check this by going to your cloud provider and search by tags:
 - SSH keys
 - Volumes
 
-<Warning>If you see any resource lingering around after deleting the cluster, please reach out to support.</Warning>
+<Warning>If you see any resource lingering around after deleting the cluster, please reach out to [support](mailto:lakshmi@shapeblock).</Warning>
