@@ -16,11 +16,11 @@ Invitations are on a per-cluster basis. You need to invite a user to every indiv
 
 You can invite a user by going to the "Team" tab in the Cluster details page.
 
-![teams tab]()
+![teams tab](images/cluster-team.png)
 
 You will be presented with an invite form.
 
-![invite form]()
+![invite form](images/invite-form.png)
 
 #### email
 
@@ -40,9 +40,31 @@ This role has the same permissions as `maintainer`. Additionally, they can scale
 
 You can check pending invitations by scrolling further bottom. These are invites sent out for the user, but still haven't accepted the invite.
 
+Let's invite `joe@example.com` as a maintainer. The user will show up under the "Pending invites" section.
+
+
+![Pending invite](images/pending-invite.png)
+
+Joe will get an email to accept the invite.
+
 <Note>
 For a user not signed up in ShapeBlock previously, the invite link will redirect to sign up form, and will apply the roles after they sign up successfully.
 </Note>
+
+
+After they accept the invite by signing up, they will show up under the "Members" section of the "Team" tab.
+
+![Accepted invite](images/accepted-invite.png)
+
+Joe will be able to see the cluster in the cluster list page like any other member of the cluster.
+
+![invitee cluster list](images/invitee-cluster-list.png)
+
+But they won't see the "Teams" tab and the cluster node details, nor the cluster node add form in the cluster details page.
+
+![invitee cluster detail](images/invitee-cluster-detail.png)
+
+If you need more fine-grained permissions and access, you should go for [project based teams](/teams/project-team) instead.
 
 ### Possible next steps
 
