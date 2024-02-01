@@ -15,7 +15,7 @@ The app deployment is bound to fail otherwise.
 
 Go to the app details page, and simply click the "Deploy" button.
 
-![App details deploy]()
+![App details deploy](images/deploy.png)
 
 ### Auto deploy
 
@@ -24,7 +24,7 @@ For autodeploy to work, you have to configure your app to [read from a private r
 
 Once your app is setup as a private repo, you can click the "Turn on autodeploy" button in the app details page.
 
-![App details autodeploy]()
+![App details autodeploy](images/autodeploy.png)
 
 <Note>
 When an app is setup with autodeploy turned on, you won't be able to deploy manually. You have to turn off autodeploy.
@@ -32,7 +32,11 @@ When an app is setup with autodeploy turned on, you won't be able to deploy manu
 
 Autodeploy can be turned off by clicking the "Turn off autodeploy" button in the app details page.
 
-![App details autodeploy off]()
+![App details autodeploy off](images/autodeploy-toggle.png)
+
+Autodeploy creates a webhook in your Github repo. For this reason, Autodeploy feature works only with [private repos](private-repos).
+
+![Webhook](images/webhooks.png)
 
 <Note>
 When a deployment is in progress, you can't configure the app or trigger another deployment till the deployment is completed.
@@ -42,7 +46,7 @@ When a deployment is in progress, you can't configure the app or trigger another
 
 The deployment logs for your current and previous deployments can be viewed on the "Deployments" tab in the app details page.
 
-![Deployment logs]()
+![Deployment logs](images/deployments.png)
 
 This will also show the status of the deployment, i.e. whether the deployment was successful or a failure
 
@@ -51,7 +55,7 @@ This will also show the status of the deployment, i.e. whether the deployment wa
 
 When a deployment is successful, you should be able to get the app URL in the app detail page.
 
-![App url]()
+![App url](images/successful-deployment.png)
 
 The app URL is of the form `https://[project-name]-[app.name].[cluster-name].shapeblockapp.com`.
 
@@ -66,13 +70,15 @@ It is possible to add one or more [custom domains](custom-domains) to your app a
 
 A deployment could fail due to any number of reasons. It will show up in the "Deployments" tab with the status "failed".
 
-![failed deployment]()
+![failed deployment](images/failed-deployment.png)
 
 Please check the [troubleshooting section](troubleshooting-failed-deployments) for more information on how to fix this.
 
 ### Deployment is successful but app doesn't load
 
 Sometimes, a deployment is successful but the app doesn't come up.
+
+TODO
 
 ![app loading failed]()
 

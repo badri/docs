@@ -10,7 +10,7 @@ Some other examples would be `NODE_ENV=production`, `MAVEN_OPTS=-Xms256m -Xmx512
 
 Build variables can be added at the "build variables" tab of the app page.
 
-![Build variables]()
+![Build variables](images/build-vars.png)
 
 ### Runtime variables
 
@@ -20,7 +20,7 @@ Other examples are `JAVA_TOOL_OPTIONS=-Dserver.port=8082`, `DJANGO_SETTINGS_MODU
 
 Runtime variables can be added at the "Environment variables" tab of the app page.
 
-![Runtime variables]()
+![Runtime variables](images/env-vars.png)
 
 #### Secrets
 
@@ -29,7 +29,7 @@ You app key in Laravel is a good example(`APP_KEY=base64:supersecretkey`).
 
 Secrets can be added at the "Secrets" tab of the app page.
 
-![Secrets]()
+![Secrets](images/secrets.png)
 
 
 ### Volumes
@@ -37,7 +37,7 @@ Secrets can be added at the "Secrets" tab of the app page.
 ShapeBlock builds and packages your application into a container, and containers are ephermeral. Any information you store in the container gets wiped out when the container restarts.
 In your application, you might want to save images, files or other data in the container and make sure that it persists even after containers restart. For doing this, you create mount volumes, where you specify a mount name, a path and the size of the volume. You can do so in the "Volumes" tab of the app page.
 
-![Volumes]()
+![Volumes](images/volumes.png)
 
 <Info>
 All apps are built in the `/workspace` directory of the container. When you give a path, you should give the absolute path. For instance, if you want to mount a persistent volume for the "data/images" directory in your app, then the path value will be `/workspace/data/images`.
@@ -46,6 +46,16 @@ All apps are built in the `/workspace` directory of the container. When you give
 <Note>
 Check out [examples](/examples) for typical app configuration values for your stack.
 </Note>
+
+## Rolling out changes
+
+As long as your app is in "Created" state, adding any of the above configurations will not yet deploy the app.
+
+![App created state](images/app-created-state.png)
+
+Once your app is in "Ready" state, changing any of these configurations will trigger a new deployment.
+
+![App ready state](images/app-ready-state.png)
 
 ### Possible next steps
 

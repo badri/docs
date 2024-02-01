@@ -1,18 +1,23 @@
 An app can talk to a service only if it is "attached" to it.
 
+## Prerequisite
+
+<Card title="Create service" icon="database" iconType="duotone" href="create-service">
+You must create your service before you attach it to your app.
+</Card>
+
+
 Attaching a service to an app simply entails exposing the service parameters like the URL and the credentials as runtime environment variables in the app.
 
 This can be done either from the service detail page by going to the "Apps" tab,
 
-![App tab in services]()
+![services tab in app](images/attach-service.png)
 
-or by visiting the "Services" tab in the App detail page.
+In this form, you select the service you want to attach to, and configure how you want to expose your service.
 
-![Service tab in apps]().
+Once the service is attached successfully, it will show up in the "Services" tab of your app page.
 
-In either case, you select the app/service you want to attach to, and configure how you want to expose your service.
-
-![Service attach form]().
+![Attached services](images/app-attached-services.png)
 
 There are 2 ways to expose a service via environment variables.
 
@@ -20,9 +25,13 @@ There are 2 ways to expose a service via environment variables.
 
 The service will bind to the app as a url. Example: `DATABASE_URL=postgres://shapeblock:shapeblock@db-postgresql/shapeblock`.
 
+![Service attach as URL variable](images/url.png)
+
 ### As separate variables
 
 Each parameter of the service would be a separate environment variable. The same service as above would entail 4 variables: `DB_USER=shapeblock`, `DB_PASSWORD=shapeblock`, `DB_HOST=db-postgresql`, `DB_NAME=shapeblock`.
+
+![Service attach as separate variables](images/separate.png)
 
 <Note>
 It is possible to change the environment variable name in both cases after the service is attached, but the value cannot be changed. For example, `DATABASE_URL` in the above example can be changed to `DB_URL` after attaching the service.

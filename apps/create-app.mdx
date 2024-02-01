@@ -4,9 +4,15 @@ Apps can be of any size or complexity, ranging from a simple HTTP service which 
 
 You can create a new app from the project page as shown below:
 
+![Create new app from project](images/create-app-from-project.png)
+
 You can also create new apps from the "Apps" link in the menu.
 
-![Create new app]()
+![Create new app](images/create-app-menu.png)
+
+The new App form looks like this:
+
+![Create new app form](images/app-form.png)
 
 The project indicates the project in which your app will be deployed.
 
@@ -23,7 +29,7 @@ The "stack" denotes the tech stack for your app. Currently, the following stacks
 |---------|----------|
 | Node.js | 16, 18, 20                 |
 | Python  | 3.8, 3.9, 3.10, 3.11, 3.12 |
-| Ruby    | 3.0, 3.1, 3.2 |
+| Ruby    | 3.1, 3.2 |
 | Golang  | 1.17, 1.18, 1.19, 1.20 |
 | PHP     | 8.0, 8.1, 8.2 |
 | Java    | 11, 17 |
@@ -42,9 +48,11 @@ The branch or tag in the repo which will be deployed.
 
 The relative path where your application code is. Skip this field if your application is at the top level.
 
+![Create new app filled form](images/app-form-filled.png)
+
 Click on "Create". You will be redirected to the app page.
 
-![App details page]()
+![App details page](images/created-app.png)
 
 <Note>This step creates your application configuration only, it doesn't deploy the app in the cluster yet.</Note>
 
