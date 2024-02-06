@@ -1,0 +1,360 @@
+Use [this git repo](https://github.com/shapeblock/drupal-10/) as a reference implementation.
+
+## Preparing your code
+
+You have to make the following changes to your code base:
+
+### PHP extensions to load
+
+Create a folder in your top level directory called `.php.ini.d`. Create a file with the name `drupal.ini` with the following contents.
+
+```
+[PHP]
+engine = On
+short_open_tag = Off
+precision = 14
+output_buffering = 4096
+zlib.output_compression = Off
+implicit_flush = Off
+unserialize_callback_func =
+serialize_precision = -1
+disable_functions =
+disable_classes =
+zend.enable_gc = On
+expose_php = Off
+max_execution_time = 30
+max_input_time = 60
+memory_limit = 128M
+error_reporting = E_ALL & ~E_DEPRECATED & ~E_STRICT
+display_errors = Off
+display_startup_errors = Off
+log_errors = On
+log_errors_max_len = 1024
+ignore_repeated_errors = Off
+ignore_repeated_source = Off
+report_memleaks = On
+html_errors = On
+variables_order = "GPCS"
+request_order = "GP"
+register_argc_argv = Off
+auto_globals_jit = On
+post_max_size = 100M
+auto_prepend_file =
+auto_append_file =
+default_mimetype = "text/html"
+default_charset = "UTF-8"
+doc_root =
+user_dir =
+enable_dl = Off
+file_uploads = On
+upload_max_filesize = 100M
+max_file_uploads = 20
+allow_url_fopen = On
+allow_url_include = Off
+default_socket_timeout = 60
+
+extension = bz2.so
+extension = curl.so
+extension = dba.so
+extension = enchant.so
+extension = fileinfo.so
+extension = gd.so
+extension = ldap.so
+extension = mbstring.so
+extension = openssl.so
+extension = pdo.so
+extension = pdo_mysql.so
+extension = pdo_sqlite.so
+extension = readline.so
+extension = soap.so
+extension = sodium.so
+extension = sockets.so
+extension = xsl.so
+extension = zip.so
+extension = zlib.so
+
+zend_extension = xdebug.so
+zend_extension = opcache.so
+```
+This configures the PHP extensions to be loaded in your application. The filename doesn't matter, as long as it ends with `.ini`.
+
+<Note>
+The PHP buildpack loads only the extensions you want for performance reasons. So, you will have to create this file for any PHP app you deploy.
+</Note>
+
+Here's a reference implementation of the same: https://github.com/shapeblock/drupal-10/blob/main/.php.ini.d/drupal.ini.
+
+### Nginx configuration
+
+All PHP buildpacks run PHP FPM served by Nginx. Drupal needs custom nginx configuration. Create a folder at the top level called `.nginx.conf.d` and create a file with the following contents:
+
+```
+client_max_body_size 100m;
+# forward http to https
+if ($redirect_to_https = "yes") {
+    return 301 https://$http_host$request_uri;
+}
+# Deny hidden files (.htaccess, .htpasswd, .DS_Store).
+location ~ /\. {
+    deny            all;
+    access_log      off;
+    log_not_found   off;
+}
+
+location = /favicon.ico {
+    log_not_found off;
+    access_log off;
+}
+
+location = /robots.txt {
+    allow all;
+    log_not_found off;
+    access_log off;
+}
+
+# Very rarely should these ever be accessed outside of your lan
+location ~* \.(txt|log)$ {
+    allow 192.168.0.0/16;
+    deny all;
+}
+
+location ~ \..*/.*\.php$ {
+    return 403;
+}
+
+location ~ ^/sites/.*/private/ {
+    return 403;
+}
+
+# Block access to scripts in site files directory
+location ~ ^/sites/[^/]+/files/.*\.php$ {
+    deny all;
+}
+
+# Allow "Well-Known URIs" as per RFC 5785
+location ~* ^/.well-known/ {
+    allow all;
+}
+
+# Block access to "hidden" files and directories whose names begin with a
+# period. This includes directories used by version control systems such
+# as Subversion or Git to store control files.
+location ~ (^|/)\. {
+    return 403;
+}
+
+location / {
+    # try_files $uri @rewrite; # For Drupal <= 6
+    try_files $uri /index.php?$query_string; # For Drupal >= 7
+}
+
+location @rewrite {
+    #rewrite ^/(.*)$ /index.php?q=$1; # For Drupal <= 6
+    rewrite ^ /index.php; # For Drupal >= 7
+}
+
+# Don't allow direct access to PHP files in the vendor directory.
+location ~ /vendor/.*\.php$ {
+    deny all;
+    return 404;
+}
+
+# Protect files and directories from prying eyes.
+location ~* \.(engine|inc|install|make|module|profile|po|sh|.*sql|theme|twig|tpl(\.php)?|xtmpl|yml)(~|\.sw[op]|\.bak|\.orig|\.save)?$|^(\.(?!well-known).*|Entries.*|Repository|Root|Tag|Template|composer\.(json|lock)|web\.config)$|^#.*#$|\.php(~|\.sw[op]|\.bak|\.orig|\.save)$ {
+    deny all;
+    return 404;
+}
+
+location ~ '\.php$|^/update.php' {
+    try_files $uri =404;
+    fastcgi_param  QUERY_STRING       $query_string;
+    fastcgi_param  REQUEST_METHOD     $request_method;
+    fastcgi_param  CONTENT_TYPE       $content_type;
+    fastcgi_param  CONTENT_LENGTH     $content_length;
+    fastcgi_param  SCRIPT_NAME        $fastcgi_script_name;
+    fastcgi_param  REQUEST_URI        $request_uri;
+    fastcgi_param  DOCUMENT_URI       $document_uri;
+    fastcgi_param  DOCUMENT_ROOT      $document_root;
+    fastcgi_param  SERVER_PROTOCOL    $server_protocol;
+    fastcgi_param  HTTPS              $proxy_https if_not_empty;
+    fastcgi_param  GATEWAY_INTERFACE  CGI/1.1;
+    fastcgi_param  SERVER_SOFTWARE    nginx/$nginx_version;
+    fastcgi_param  REMOTE_ADDR        $remote_addr;
+    fastcgi_param  REMOTE_PORT        $remote_port;
+    fastcgi_param  SERVER_ADDR        $server_addr;
+    fastcgi_param  SERVER_PORT        $server_port;
+    fastcgi_param  SERVER_NAME        $host;
+    fastcgi_param HTTP_PROXY "";
+    fastcgi_param   SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    fastcgi_pass    php_fpm;
+}
+
+# Fighting with Styles? This little gem is amazing.
+# location ~ ^/sites/.*/files/imagecache/ { # For Drupal <= 6
+location ~ ^/sites/.*/files/styles/ { # For Drupal >= 7
+    try_files $uri @rewrite;
+}
+
+# Handle private files through Drupal. Private file's path can come
+# with a language prefix.
+location ~ ^(/[a-z\-]+)?/system/files/ { # For Drupal >= 7
+    try_files $uri /index.php?$query_string;
+}
+
+# Enforce clean URLs
+# Removes index.php from urls like www.example.com/index.php/my-page --> www.example.com/my-page
+# Could be done with 301 for permanent or other redirect codes.
+if ($request_uri ~* "^(.*/)index\.php/(.*)") {
+    return 307 $1$2;
+}
+```
+
+This is standard nginx configuration for running Drupal 8+. The clean URLs feature won't work without this configuration. The filename doesn't matter as long as it ends with `.conf`.
+
+Here's a reference implementation. https://github.com/shapeblock/drupal-10/blob/main/.nginx.conf.d/drupal-server.conf
+
+### Update settings.php
+
+Update Drupal's `settings.php` file by adding a custom settings.php which will pull database credentials from environment files.
+
+```php
+if (file_exists($app_root . '/' . $site_path . '/settings.shapeblock.php')) {
+  include $app_root . '/' . $site_path . '/settings.shapeblock.php';
+}
+```
+
+Please add this in the end before your local setup settings(if any).
+Reference implementation: https://github.com/shapeblock/drupal-10/blob/main/web/sites/default/settings.php
+
+Next, we have to add the `settings.shapeblock.php` file in the same folder.
+
+<Note>
+The name of the file is arbitrary. It can even be `settings.prod.php`.
+</Note>
+
+```php
+<?php
+use Drupal\Core\Installer\InstallerKernel;
+
+
+$config['system.logging']['error_level'] = 'verbose';
+
+  $databases['default']['default'] = [
+    'driver' => 'mysql',
+    'database' => getenv('DB_NAME'),
+    'username' => getenv('DB_USER'),
+    'password' => getenv('DB_PASSWORD'),
+    'host' => getenv('DB_HOST'),
+    'port' => '3306',
+    'init_commands' => [
+      'isolation_level' => 'SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED',
+    ],
+  ];
+
+$settings['trusted_host_patterns'] = ['.*'];
+$settings['hash_salt'] = getenv('HASH_SALT');
+```
+
+Reference: https://github.com/shapeblock/drupal-10/blob/main/web/sites/default/settings.shapeblock.php
+
+### Permissions
+
+The Drupal installer rewrites `settings.php` file during installation, even when we provide one. For this, we need to provide explicit write access to `settings.php`.
+The default container runtime in ShapeBlock is a readonly filesystem for security reasons. We have to provide explicit access to the `settings.php` file.
+
+For this, we have to create a `.sb.yml` and give a list of file(s) and what permissions to give. In this case, the file will look like this:
+
+```yaml
+permissions:
+  - path: web/sites/default/settings.php
+    mode: a+w
+```
+
+### MySQL client (optional)
+
+If we want to run `drush`, some drush commands require the mysql-client package to be installed in the container. This is not installed by default.
+We have to create a new file in the top level directory called `Aptfile` and add the apt package name there.
+
+```
+mysql-client
+```
+
+Reference: https://github.com/shapeblock/drupal-10/blob/main/Aptfile
+
+If your application needs any other packages, it can be added to this file.
+
+## Services
+
+Drupal needs a MySQL database to store the content generated by users. You have to [create a service](/services/create-service) og type "MySQL" and [attach](/services/attach-service) it to the app before deploying it.
+
+![Drupal services](/images/drupal-services.png)
+
+## Build variables
+
+You have to specify the docroot of your drupal installation using the `BP_PHP_WEB_DIR` variable. For the above repo, it will be `web`.
+
+<Note>
+For any PHP app, the default docroot is the top level directory of your code. If you want this to be something else, you have to set the `BP_PHP_WEB_DIR` relative to the directory structure of your code base.
+</Note>
+
+| Variable Name | Value | Notes |
+|---------------|-------|-------|
+| BP_PHP_SERVER | nginx | Indicates what web server we will be using. |
+| BP_RUN_COMPOSER_INSTALL | 1 | A Drupal specific build variable which tells not to wipe out composer installed packages in the code base, i.e. the contrib modules and themes. Not needed for other PHP frameworks. |
+| BP_PHP_ENABLE_CACHE_CONTROL | false | Disable nginx cache control, which messes with Nginx serving aggregated and compressed Drupal static files. |
+| BP_PHP_VERSION | Latest version of PHP | **Optional**. Supports 8.1 and 8.2 |
+
+![Drupal build vars](/images/drupal-build-vars.png)
+
+## Runtime variables
+
+When you attach a service, it creates environment variables which contain service information and credentials.
+
+<Note>
+Please ensure that the variable name matches the ones given in `settings.php`. You can change either the variable names here or in the `settings.php` file accordingly.
+</Note>
+
+These should look something like this:
+
+| Variable Name | Value | Notes |
+|---------------|-------|-------|
+| DB_HOST | `<service name>-mysql` | Hostname of the mysql service which is attached. |
+| DB_NAME | shapeblock | Name of the database |
+| DB_USER | shapeblock | Name of the DB user who has access to the above database. |
+| DB_PASSWORD | shapeblock | Password for the DB user above |
+
+![Drupal env vars](/images/drupal-runtime-vars.png)
+
+Drupal also needs a `HASH_SALT` secret to be provided.
+
+| Variable Name | Value | Notes |
+|---------------|-------|-------|
+| HASH_SALT | `<some generated secret string>` | |
+
+![Drupal secrets](/images/drupal-secrets.png)
+
+<Note>
+All secrets are readonly. Once created, they cannot be edited. You have to delete and recreate them.
+</Note>
+
+
+## Volumes
+
+Drupal needs persistent storage to store user uploaded files. For this, we need to create a new volume mount.
+
+| Mount Name | Mount path | Size | Notes |
+|------------|------------|-------|------|
+| public-files | /workspace/web/sites/default/files | 2GiB | The name of the mount is arbitrary and for your  reference only. |
+
+<Note>
+The mount path is the path you want to persist. This is an absolute path. All apps in ShapeBlock are deployed in the `/workspace` directory of the container. In our Drupal app, the public files directory will be `/workspace/web/sites/default/files`.
+</Note>
+
+![Drupal volumes](/images/drupal-volume.png)
+
+You can optionally create another mount for storing Drupal's private files.
+
+Once the app is deployed successfully, you should be able to view the Drupal site.
+
+![Drupal site](/images/drupal-site.png)
+
