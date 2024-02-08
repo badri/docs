@@ -1,0 +1,9 @@
+ShapeBlock uses [Paketo buildpacks](https://paketo.io/) to build your application containers. All you need to do is provide the source code of your application.
+Shapeblock will figure out how to build the container image by ordering a set of buildpacks which best match your application context.
+There is not need to write any Dockerfile or know about containers to deploy ShapeBlock.
+
+ShapeBlock caches various layers of an application container and rebuilds only the layers which have changed, thus reducing build times of applications.
+
+<Note>
+You cannot directly deploy a container image in ShapeBlock.
+</Note>
