@@ -1,0 +1,63 @@
+
+To add AWS keys, click on the providers link in the top menu.
+
+![Menu with providers](/images/providers.png)
+
+Click on "Add new Cloud Provider keys". It will open a dropdown with different cloud providers.
+Select "AWS" from the options.
+
+![Add new cloud provider](/images/new-provider.png)
+
+Alternatively, you can directly [visit](http://localhost:8000/providers/new/aws/) the page.
+
+The form will present you with an option to add a token.
+
+![AWS form](/images/aws-form.png)
+
+Give it a human-readable name which will help you refer it later.
+
+## Instructions for AWS keys
+
+The below instructions assume that you already have an AWS account created and you’re logged into it.
+
+### Navigate to IAM (Identity and Access Management)
+
+1. After logging in, locate the Services menu at the top of the console.
+2. Click on Services and find IAM under the Security, Identity, & Compliance section or use the search bar to find IAM. Click on IAM to open the IAM dashboard.
+
+### Create a New IAM User
+
+1. In the IAM dashboard, look for the Users menu on the left-hand side and click on it.
+2. Click the Add user button.
+3. Enter a User name for the new user. This name should be descriptive enough to identify the user's role or purpose.
+4. Under the Access type, check the box for Programmatic access. This gives the user an access key ID and secret access key for the AWS API, CLI, SDK, and other development tools.
+
+### Attach Policies Directly
+
+1. After selecting programmatic access, click on the Next: Permissions button.
+2. Here, you have a few options to set permissions. To attach an EC2 administrator policy directly, choose Attach existing policies directly.
+3. In the search bar, type AmazonEC2FullAccess to find the EC2 administrator policy.
+4. Check the box next to AmazonEC2FullAccess. This policy grants full access to EC2 resources.
+5. Click the Next: Tags button (optional step).
+
+![AWS IAM](/images/aws-iam.png)
+
+### Add Tags (Optional)
+
+1. Tags are key-value pairs that can help you manage, identify, organize, search for, and filter resources.
+2. Add any tags that you might find useful. For instance, you might add a tag for the user's department or role.
+3. After adding tags, click the Next: Review button.
+
+### Review and Create User
+
+1. Review the user details, including the user name, access type, and permissions.
+2. If everything looks correct, click the Create user button.
+3. After the user is created, you'll see a success message and the option to download the .csv file containing the new user's access key ID and secret access key. Download and save this file securely, as you will not be able to access the secret access key again after this step.
+
+Copy over the keys downloaded above and paste it in the form above and click on "save".
+
+You should have your provider listed on the [providers](http://localhost:8000/providers/) page after adding the keys successfully.
+
+### Possible next steps
+
+<Card title="Create a new cluster" icon="server" iconType="duotone" href="/clusters/create-cluster"/>
