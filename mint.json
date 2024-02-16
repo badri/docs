@@ -43,7 +43,6 @@
       "group": "Clusters",
       "icon": "server",
       "pages": [
-        "clusters/introduction",
         "clusters/create-cluster",
         "clusters/add-nodes",
         "clusters/remove-nodes",
@@ -63,6 +62,7 @@
         "apps/private-repos",
         "apps/create-app",
         "apps/configure-app",
+        "apps/.sb.yml",
         "apps/deploy-app",
         "apps/delete-app"
       ]
