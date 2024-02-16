@@ -8,6 +8,8 @@ This is a YAML file where you can configure:
 - Environment variables
 - Volumes
 - Services
+- Init processes
+- Worker processes
 
 <Note>
 It is **not compulsory** to have a .sb.yaml file in your app's code base. You can still configure these parameters from the UI, this feature is offered as a convenience to quicly deploy an application.
@@ -109,3 +111,47 @@ services:
     type: mysql
     attach_as: url
 ```
+
+## Init processes
+
+You can define init processes defined in your `Procfile`, along with the resource usage. These will be defined under the `init` section. Here's an example of the same:
+
+```yaml
+init:
+  build-css:
+    resources:
+      cpu: "1000m"
+      memory: "1Gi"
+  migrate:
+    resources:
+      cpu: "500m"
+      memory: "512Mi"
+```
+
+<Note>
+Please ensure that you have defined the `build-css` and `migrate` processes in your app's `Procfile`.
+</Note>
+
+These processes are temporary containers which run a task and exit before booting the main container. If any of your init processes fails, your application will fail to deploy.
+Ensure that these start and run within 2-3 minutes.
+
+## Worker processes
+
+You can also define background worker jobs under the `workers` section. Similar to init processes, these should have entries in your app's `Procfile`.
+
+Here's an example.
+
+```yaml
+workers:
+  celery:
+    resources:
+      cpu: "1000m"
+      memory: "1Gi"
+  celery-beat:
+    resources:
+      cpu: "500m"
+      memory: "512Mi"
+```
+
+This will spawn 2 workers with the above resource specifications. They will run independent of your app container.
+

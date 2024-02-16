@@ -1,0 +1,53 @@
+Use [this git repo](https://github.com/badri/flask-redis/) as a reference implementation.
+
+The above repo contains a `.sb.yml` file which is a specification of the entire app's configuration. Check [.sb.yml file](/apps/.sb.yml) for more information.
+
+This will implement a simple endpoint in Flask which will increment a counter everytime the page is loaded in the browser.
+
+It uses Redis to keep track of the count.
+
+## Preparing your code
+
+Fetch the Redis credentials from environment variables in the app.
+
+```py
+import redis
+from flask import Flask
+redis_host = os.getenv('REDIS_HOST')
+redis_password = os.getenv('REDIS_PASSWORD')
+app = Flask(__name__)
+cache = redis.Redis(host=redis_host, password=redis_password, port=6379)
+```
+
+## .sb.yml
+
+```yaml
+env_vars:
+  FLASK_APP: app.py
+  FLASK_RUN_HOST: 0.0.0.0
+  FLASK_RUN_PORT: "8080"
+
+services:
+  data-cache:
+    type: redis
+    attach_as: separate_variables
+```
+
+The environment variables are staple Flask environment variables needed to run your Flask app.
+
+In addition to this, we create a redis service called `data-cache` and attach it to the app using separate variables.
+
+
+## Procfile
+
+We add a `Procfile` which is the idomatic way to run Flask apps.
+
+```txt
+web: flask run
+```
+
+<Note>
+`web` is the name of the default process which will run in the app container.
+</Note>
+
+Deploying this app will create a Flask server and a redis cache.
