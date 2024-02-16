@@ -1,0 +1,36 @@
+Use [this git repo](https://github.com/shapeblock/go-webapp/) as a reference implementation.
+
+The above repo contains a `.sb.yml` file which is a specification of the entire app's configuration. Check [.sb.yml file](/apps/.sb.yml) for more information.
+
+This will create a Golang based web server which talks to a Postgres DB and helps you manage TODOs.
+
+## Preparing your code
+
+The `.sb.yml` file contains a build variable to preserve the static files needed to render the app. It contains 2 environment variables to indicate the application port and DB port.
+
+It also creates a postgres DB called `todo-db` to store the todo data.
+
+```yaml
+build_vars:
+  BP_KEEP_FILES: "assets/*:templates/*"
+
+env_vars:
+  PORT: "8080"
+  DB_PORT: "5432"
+
+services:
+  todo-db:
+    type: postgres
+    attach_as: separate_variables
+```
+
+The `db/db.go` contains code to fetch DB config from environment variables.
+
+```golang
+	// CONFIG VARS
+	DB_HOST := os.Getenv("DB_HOST")
+	DB_PORT := os.Getenv("DB_PORT")
+	DB_PASSWORD := os.Getenv("DB_PASSWORD")
+	DB_NAME := os.Getenv("DB_NAME")
+	DB_USER := os.Getenv("DB_USER")
+```
