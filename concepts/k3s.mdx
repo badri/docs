@@ -1,0 +1,14 @@
+ShapeBlock uses Terraform to spin up infrastructure in your cloud provider's account. After the VMs are provisioned, [k3s](https://k3s.io/) is installed on your VMs.
+
+## Why k3s?
+
+It is the simplest, minimum-viable, production ready kubernetes flavour in the market. It is cloud vendor agnostic and has no dependencies on cloud vendor specific services.
+
+## What else is installed?
+
+Some staple helm charts are installed: Cert manager for Let's encrypt certificate issuer, nginx ingress controller. Local storage is enabled for persistent volume claims.
+
+## Epinio
+
+Epinio is a container native application platform for Kubernetes. It is a helm chart that is installed in your k3s cluster. ShapeBlock communicates with Epinio API for the core applications and services.
+

@@ -1,9 +1,0 @@
-ShapeBlock uses Terraform to spin up infrastructure in your cloud provider's account. After the VMs are provisioned, we use Ansible to provision [Microk8s](https://microk8s.io/) on your VMs.
-
-## Why microk8s?
-
-It is the simplest, minimum-viable, production ready kubernetes flavour in the market. It is agnostic of the cloud vendor and comes with the ability to provision addons.
-
-## What else is installed?
-
-Some staple microk8s addons are enabled: Let's encrypt certificate issuer, nginx ingress controller, local storage. Even though microk8s comes with it's own container registry, we install a different container registry in your microk8s cluster.
