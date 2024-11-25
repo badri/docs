@@ -28,7 +28,7 @@
   ],
   "topbarCtaButton": {
     "name": "Dashboard",
-    "url": "https://dashboard.shapeblock.com"
+    "url": "https://console.shapeblock.com"
   },
   "navigation": [
     {
@@ -62,7 +62,6 @@
         "apps/private-repos",
         "apps/create-app",
         "apps/configure-app",
-        "apps/.sb.yml",
         "apps/deploy-app",
         "apps/delete-app"
       ]
@@ -87,7 +86,7 @@
     {
       "group": "Concepts",
       "pages": [
-        "concepts/microk8s",
+        "concepts/k3s",
         "concepts/buildpacks",
         "concepts/helm-charts",
         "concepts/security"
